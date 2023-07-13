@@ -1,12 +1,28 @@
-import { Client, Intents } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
+import { config } from "dotenv";
+import { registerCommands } from './src/config/commandsRegister';
+import { handleInteraction } from './src/events/interactionCreate';
 import { handleMessageCreate } from './src/events/messageCreate';
+import { loadDb } from './src/startup/dbLoader';
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES] });
+config();
+
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.DirectMessages
+	]
+});
 
 client.once('ready', () => {
-  console.log('Bot is ready!');
+	registerCommands(
+		process.env.CLIENT_ID,
+		process.env.DISCORD_BOT_TOKEN
+	);
+	loadDb();
+	console.log('Bot is ready!');
 });
 
 client.on('messageCreate', handleMessageCreate);
-
-client.login('YOUR_BOT_TOKEN');
+client.on('interactionCreate', handleInteraction);
+client.login(process.env.DISCORD_BOT_TOKEN);
