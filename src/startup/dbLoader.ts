@@ -8,10 +8,10 @@ export async function loadDb(): Promise<void> {
         (await globalThis.dbClient.db("keebot").collection("configs").find().toArray()).forEach(config => {
             globalThis.configs.push({
                 guildId: config.guildId,
-                donatorRoleId: config.donatorRoleId,
-                regularLimit: config.regularLimit,
-                donatorLimit: config.donatorLimit,
-                newPostChannelId: config.newPostChannelId
+                channels: config.channels,
+                subsConfig: config.subsConfig,
+                roles: config.roles,
+                reportTypes: config.reportTypes
             });
         });
 
