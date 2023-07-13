@@ -3,4 +3,5 @@ export type Config = {
     donatorRoleId: string;
     regularLimit: number;
     donatorLimit: number;
+    newPostChannelId: string;
 }

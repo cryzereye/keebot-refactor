@@ -10,7 +10,8 @@ export async function loadDb(): Promise<void> {
                 guildId: config.guildId,
                 donatorRoleId: config.donatorRoleId,
                 regularLimit: config.regularLimit,
-                donatorLimit: config.donatorLimit
+                donatorLimit: config.donatorLimit,
+                newPostChannelId: config.newPostChannelId
             });
         });
 
