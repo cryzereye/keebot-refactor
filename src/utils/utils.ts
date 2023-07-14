@@ -7,5 +7,5 @@ import { Snowflake } from "discord.js";
  * @returns boolean
  */
 export function isNewPostChannel(guildId: Snowflake | null, channelId: Snowflake): boolean {
-    return globalThis.configs.filter(config => config.guildId === guildId)[0].newPostChannelId === channelId;
+    return globalThis.configs.filter(config => config.guildId === guildId)[0].channels.newListings === channelId;
 }
