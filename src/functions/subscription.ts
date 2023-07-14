@@ -1,4 +1,5 @@
-import { Message, Snowflake } from "discord.js";
+import { Message } from "discord.js";
+import { Sub } from "../models/subscription";
 import { buildMessageUrl, sendDMToUserId } from "../utils/utils";
 
 
@@ -8,11 +9,12 @@ import { buildMessageUrl, sendDMToUserId } from "../utils/utils";
  */
 export function checkMessageForSubscriptions(message: Message): void {
     const { content, guildId, channelId, id } = message;
-    const subscriptions: Snowflake[] = globalThis.subscriptions.searchPost(content);
+    const subscriptions: Sub[] = globalThis.subscriptions.searchPost(content);
     if (!guildId || subscriptions.length == 0) return;
 
     const messageUrl = buildMessageUrl(guildId, channelId, id);
-    subscriptions.forEach(id => {
-        sendDMToUserId(id, `Keyword sub in <${messageUrl}>`);
+    subscriptions.forEach(sub => {
+        sendDMToUserId(sub.id, `${sub.keywords.join('\n')
+            }\n\n in ${messageUrl}`);
     });
 }

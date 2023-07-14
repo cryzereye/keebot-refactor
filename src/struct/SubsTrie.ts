@@ -1,4 +1,5 @@
 import { Snowflake } from "discord.js";
+import { Sub } from "../models/subscription";
 import { TrieNode } from "./TrieNode";
 
 export class SubsTrie {
@@ -26,18 +27,22 @@ export class SubsTrie {
         }
     }
 
-    searchPost(post: string): Snowflake[] {
-        return this.search(this.root, post);
+    searchPost(post: string): Sub[] {
+        return this.search(this.root, post, []);
     }
 
-    search(node: TrieNode, post: string): Snowflake[] {
+    search(node: TrieNode, post: string, keywords: string[]): Sub[] {
         Object.keys(node.children).forEach((key) => {
             if (post.search(key)) {
-                return this.search(node.children[key], post);
+                keywords.push(key)
+                return this.search(node.children[key], post, keywords);
             }
         });
-
-        return node.users;
+        let subs: Sub[] = [];
+        node.users.forEach(id => {
+            subs.push({ id, keywords });
+        });
+        return subs;
     }
 
     removeSub(userId: Snowflake, keywords: string[]): void {
