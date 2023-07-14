@@ -23,6 +23,7 @@ export function index() {
 			process.env.DISCORD_BOT_TOKEN
 		);
 		updatePresence(client);
+		instantiateGlobals(client);
 		console.log('Bot is ready!');
 	});
 
@@ -44,4 +45,8 @@ function updatePresence(client: Client) {
 		activities: activities,
 		status: "online"
 	});
+}
+
+function instantiateGlobals(client: Client): void {
+	globalThis.client = client;
 }

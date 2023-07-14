@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { checkMessageForSubscriptions } from '../utils/subscription';
+import { checkMessageForSubscriptions } from '../functions/subscription';
 import { isNewPostChannel } from '../utils/utils';
 
 /**
